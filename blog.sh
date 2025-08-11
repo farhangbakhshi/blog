@@ -174,7 +174,7 @@ update_from_repo() {
 
     # Stop services
     print_status "Stopping services with docker compose down..."
-    (cd "$orig_dir" && docker compose down)
+    stop_blog
 
     # Replace current directory contents (including dotfiles)
     print_warning "Replacing all contents of $orig_dir with cloned 'blog' directory."
@@ -191,6 +191,8 @@ update_from_repo() {
     rm -rf "$tmpdir"
 
     print_success "Update complete. Directory replaced with contents from the cloned 'blog' directory."
+    print_status "Starting Blog Again..."
+    start_blog
 }
 
 # Main script logic
