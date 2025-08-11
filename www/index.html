@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farhang's Blog</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'ibm': ['IBM Plex Serif', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-ibm leading-relaxed text-black dark:text-white bg-white dark:bg-black max-w-[700px] mx-auto py-10 px-6 md:px-6">
+    <nav class="mb-16 border-b border-black dark:border-white pb-6">
+        <a href="/" class="text-black dark:text-white no-underline font-bold hover:underline text-lg">Farhang's Blog</a>
+    </nav>
+
+    <main>
+        <h1 class="text-4xl mb-12 font-medium">Posts</h1>
+        
+        <article class="mb-12 pb-10 border-b border-gray-300 dark:border-gray-600 last:border-b-0">
+            <h2 class="text-2xl mb-6 font-medium">
+                <a href="/linux-a-comprehensive-introduction" class="text-black dark:text-white no-underline hover:underline">Linux: A Comprehensive Introduction</a>
+            </h2>
+            <time class="text-base text-gray-600 dark:text-gray-400 block mb-4">August 11, 2025</time>
+            <p class="mb-6 text-lg">Discover the power and flexibility of Linux operating systems.</p>
+        </article>
+    </main>
+</body>
+</html>

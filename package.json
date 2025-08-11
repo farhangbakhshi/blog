@@ -1,0 +1,19 @@
+{
+  "name": "farhangs-blog",
+  "version": "1.0.0",
+  "description": "Farhang's personal blog built with static HTML and served with Nginx",
+  "main": "Dockerfile",
+  "scripts": {
+    "build": "docker build -t farhangs-blog .",
+    "start": "docker run -p 80:80 farhangs-blog",
+    "dev": "docker run -p 3000:80 farhangs-blog"
+  },
+  "keywords": [
+    "blog",
+    "nginx",
+    "docker",
+    "static-site"
+  ],
+  "author": "Farhang",
+  "license": "MIT"
+}
