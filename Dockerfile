@@ -1,4 +1,4 @@
-FROM nginx:alpine
+FROM nginx:latest
 
 # Install additional packages for health checks
 RUN apk add --no-cache curl
