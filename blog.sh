@@ -28,19 +28,6 @@ print_error() {
     echo -e "${RED}[ERROR]${NC} $1"
 }
 
-# Function to check if Docker is installed
-check_docker() {
-    if ! command -v docker &> /dev/null; then
-        print_error "Docker is not installed. Please install Docker first."
-        exit 1
-    fi
-    
-    if ! command -v docker-compose &> /dev/null; then
-        print_error "Docker Compose is not installed. Please install Docker Compose first."
-        exit 1
-    fi
-}
-
 # Function to start the blog
 start_blog() {
     print_status "Starting the blog..."
@@ -130,27 +117,21 @@ show_help() {
 # Main script logic
 case "$1" in
     start)
-        check_docker
         start_blog
         ;;
     stop)
-        check_docker
         stop_blog
         ;;
     restart)
-        check_docker
         restart_blog
         ;;
     logs)
-        check_docker
         show_logs
         ;;
     test)
-        check_docker
         test_config
         ;;
     status)
-        check_docker
         show_status
         ;;
     new-post)
