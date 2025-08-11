@@ -28,6 +28,16 @@ print_error() {
     echo -e "${RED}[ERROR]${NC} $1"
 }
 
+# Source configuration
+CONFIG_FILE="/root/config.env"
+if [ -f "$CONFIG_FILE" ]; then
+    # shellcheck source=/root/config.env
+    . "$CONFIG_FILE"
+    print_status "Loaded configuration from $CONFIG_FILE"
+else
+    print_warning "Config file not found at $CONFIG_FILE; REPO_ADDRESS-dependent features may not work."
+fi
+
 # Function to start the blog
 start_blog() {
     print_status "Starting the blog..."
@@ -112,6 +122,25 @@ show_help() {
     echo "  $0 start"
     echo "  $0 new-post"
     echo "  $0 logs"
+}
+
+# New: clone a repository using $REPO_ADDRESS from config.env
+clone_repo() {
+    local repo="${REPO_ADDRESS}"
+
+    if [ -z "$repo" ]; then
+        print_error "REPO_ADDRESS is not set. Ensure $CONFIG_FILE exists and defines REPO_ADDRESS."
+        return 1
+    fi
+
+    if ! command -v git >/dev/null 2>&1; then
+        print_error "git is not installed or not in PATH."
+        return 1
+    fi
+
+    print_status "Cloning repository: $repo"
+    git clone "$repo"
+    print_success "Repository cloned."
 }
 
 # Main script logic
