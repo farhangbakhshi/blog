@@ -41,7 +41,7 @@ fi
 # Function to start the blog
 start_blog() {
     print_status "Starting the blog..."
-    docker-compose up -d
+    docker compose up -d
     
     # Wait a moment for the container to start
     sleep 3
@@ -57,7 +57,7 @@ start_blog() {
 # Function to stop the blog
 stop_blog() {
     print_status "Stopping the blog..."
-    docker-compose down
+    docker compose down
     print_success "Blog stopped"
 }
 
@@ -71,7 +71,7 @@ restart_blog() {
 # Function to show logs
 show_logs() {
     print_status "Showing nginx logs (Ctrl+C to exit)..."
-    docker-compose logs -f nginx
+    docker compose logs -f nginx
 }
 
 # Function to test nginx configuration
