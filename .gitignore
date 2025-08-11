@@ -1,0 +1,81 @@
+# ---- Node & package managers ----
+node_modules/
+.npm/
+.npmrc
+.pnpm-store/
+.pnpm-debug.log*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Lockfiles are meant to be committed
+# (package-lock.json, yarn.lock, pnpm-lock.yaml) -> do NOT ignore
+
+# ---- Build outputs & caches (generic) ----
+dist/
+build/
+out/
+.cache/
+.parcel-cache/
+.eslintcache
+.stylelintcache
+.turbo/
+
+# Keep your checked-in site under www/
+# Do NOT ignore www/ (it is source content in this repo)
+# www/
+
+# ---- Coverage ----
+coverage/
+.nyc_output/
+*.lcov
+
+# ---- Environment & secrets ----
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# ---- Logs ----
+logs/
+*.log
+*.log.*
+log/
+nohup.out
+
+# ---- Editor & IDE ----
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.iml
+
+# ---- OS artifacts ----
+.DS_Store
+.DS_Store?
+Thumbs.db
+Desktop.ini
+.Spotlight-V100
+.fseventsd
+Icon?
+
+# ---- Temporary files ----
+*.swp
+*.swo
+*~
+.~lock.*
+*.tmp
+.tmp/
+tmp/
+
+# ---- Docker / Compose (local overrides) ----
+.docker/
+docker-compose.override.yml
+
+# ---- Tooling / hosts ----
+.netlify/
+.vercel/
