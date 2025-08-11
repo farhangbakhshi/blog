@@ -116,6 +116,7 @@ show_help() {
     echo "  test       Test nginx configuration"
     echo "  status     Show blog status"
     echo "  new-post   Create a new blog post"
+    echo "  update     Clone repo and replace current directory with repo's blog contents"
     echo "  help       Show this help message"
     echo ""
     echo "Examples:"
@@ -143,6 +144,55 @@ clone_repo() {
     print_success "Repository cloned."
 }
 
+# New: update from repo (clone -> docker compose down -> replace PWD with cloned blog contents)
+update_from_repo() {
+    local orig_dir tmpdir blog_src uuid
+    orig_dir="$(pwd)"
+    # Use a UUID for the update path under /root
+    if command -v uuidgen >/dev/null 2>&1; then
+        uuid="$(uuidgen)"
+    elif [ -r /proc/sys/kernel/random/uuid ]; then
+        uuid="$(cat /proc/sys/kernel/random/uuid)"
+    else
+        uuid="$(date +%s)-$$"
+    fi
+    tmpdir="/root/blog-update-${uuid}"
+    mkdir -p "$tmpdir"
+    print_status "Cloning into temporary directory: $tmpdir"
+
+    pushd "$tmpdir" >/dev/null
+    clone_repo
+
+    # Find the 'blog' directory inside the cloned repo
+    blog_src="$(find "$tmpdir" -maxdepth 2 -type d -name 'blog' | head -n1)"
+    if [ -z "$blog_src" ]; then
+        print_error "Could not find a 'blog' directory in the cloned repository."
+        popd >/dev/null
+        rm -rf "$tmpdir"
+        return 1
+    fi
+
+    # Stop services
+    print_status "Stopping services with docker compose down..."
+    (cd "$orig_dir" && docker compose down)
+
+    # Replace current directory contents (including dotfiles)
+    print_warning "Replacing all contents of $orig_dir with cloned 'blog' directory."
+    (
+        set -e
+        cd "$orig_dir"
+        shopt -s dotglob nullglob
+        rm -rf -- *
+    )
+
+    # Copy new contents and cleanup
+    cp -a "$blog_src"/. "$orig_dir"/
+    popd >/dev/null
+    rm -rf "$tmpdir"
+
+    print_success "Update complete. Directory replaced with contents from the cloned 'blog' directory."
+}
+
 # Main script logic
 case "$1" in
     start)
@@ -162,6 +212,9 @@ case "$1" in
         ;;
     status)
         show_status
+        ;;
+    update)
+        update_from_repo
         ;;
     help|--help|-h)
         show_help
