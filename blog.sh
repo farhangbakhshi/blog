@@ -163,9 +163,6 @@ case "$1" in
     status)
         show_status
         ;;
-    new-post)
-        create_post
-        ;;
     help|--help|-h)
         show_help
         ;;
