@@ -11,6 +11,9 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
+# Get the directory where this script is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 # Function to print colored output
 print_status() {
     echo -e "${BLUE}[INFO]${NC} $1"
@@ -41,6 +44,7 @@ fi
 # Function to start the blog
 start_blog() {
     print_status "Starting the blog..."
+    cd "$SCRIPT_DIR"
     docker compose up -d
     
     # Wait a moment for the container to start
@@ -57,6 +61,7 @@ start_blog() {
 # Function to stop the blog
 stop_blog() {
     print_status "Stopping the blog..."
+    cd "$SCRIPT_DIR"
     docker compose down
     print_success "Blog stopped"
 }
@@ -71,13 +76,14 @@ restart_blog() {
 # Function to show logs
 show_logs() {
     print_status "Showing nginx logs (Ctrl+C to exit)..."
+    cd "$SCRIPT_DIR"
     docker compose logs -f nginx
 }
 
 # Function to test nginx configuration
 test_config() {
     print_status "Testing nginx configuration..."
-    if docker run --rm -v "$(pwd)/nginx:/etc/nginx:ro" nginx:alpine nginx -t; then
+    if docker run --rm -v "$SCRIPT_DIR/nginx:/etc/nginx:ro" nginx:alpine nginx -t; then
         print_success "Nginx configuration is valid"
     else
         print_error "Nginx configuration has errors"
