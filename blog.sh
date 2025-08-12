@@ -47,8 +47,8 @@ start_blog() {
     copy_ssl_certificates
     
     cd "$SCRIPT_DIR"
-    docker compose up -d
-    
+    docker compose up --force-recreate --build -d
+
     # Wait for the container to start and nginx to initialize
     print_status "Waiting for nginx to start..."
     sleep 5
