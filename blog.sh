@@ -83,7 +83,11 @@ show_logs() {
 # Function to test nginx configuration
 test_config() {
     print_status "Testing nginx configuration..."
-    if docker run --rm -v "$SCRIPT_DIR/nginx:/etc/nginx:ro" nginx:latest nginx -t; then
+    if docker run --rm \
+        -v "$SCRIPT_DIR/nginx/nginx.conf:/tmp/nginx.conf:ro" \
+        -v "$SCRIPT_DIR/nginx/blog.conf:/tmp/blog.conf:ro" \
+        -v "$SCRIPT_DIR/ssl:/tmp/ssl:ro" \
+        nginx:latest sh -c "cp /tmp/nginx.conf /etc/nginx/nginx.conf && cp /tmp/blog.conf /etc/nginx/conf.d/blog.conf && mkdir -p /etc/nginx/ssl && cp /tmp/ssl/* /etc/nginx/ssl/ && nginx -t"; then
         print_success "Nginx configuration is valid"
     else
         print_error "Nginx configuration has errors"
@@ -98,10 +102,19 @@ show_status() {
     if docker ps | grep -q "blog_nginx"; then
         print_success "Blog container is running"
         
-        if curl -s -o /dev/null -w "%{http_code}" http://localhost | grep -q "200"; then
-            print_success "Blog is accessible at http://localhost"
+        # Check HTTP redirect
+        if curl -s -o /dev/null -w "%{http_code}" http://localhost | grep -q "301"; then
+            print_success "HTTP to HTTPS redirect is working"
+            
+            # Check HTTPS
+            if curl -k -s -o /dev/null -w "%{http_code}" https://localhost | grep -q "200"; then
+                print_success "Blog is accessible at https://localhost (HTTPS)"
+                print_status "Note: HTTP requests are redirected to HTTPS"
+            else
+                print_warning "HTTPS is not responding properly"
+            fi
         else
-            print_warning "Container is running but blog is not accessible"
+            print_warning "HTTP redirect is not working as expected"
         fi
     else
         print_error "Blog container is not running"
