@@ -33,11 +33,9 @@ app = Flask(__name__)
 CORS(app)
 
 # Configuration
-SSL_CERT_PATH = "/root/certificate.crt"
-SSL_KEY_PATH = "/root/private.key"
 BLOG_DIR = "/root/blog"
 PORT = 5000
-HOST = "127.0.0.1"
+HOST = "0.0.0.0"
 
 # GitHub IP ranges (updated as of 2024)
 GITHUB_IP_RANGES = [
@@ -198,19 +196,6 @@ def health_check():
     )
 
 
-def check_ssl_files():
-    """Check if SSL certificate files exist."""
-    cert_exists = os.path.exists(SSL_CERT_PATH)
-    key_exists = os.path.exists(SSL_KEY_PATH)
-
-    if not cert_exists:
-        logger.error(f"SSL certificate not found: {SSL_CERT_PATH}")
-    if not key_exists:
-        logger.error(f"SSL private key not found: {SSL_KEY_PATH}")
-
-    return cert_exists and key_exists
-
-
 def check_blog_script():
     """Check if blog script exists and is executable."""
     script_path = os.path.join(BLOG_DIR, "blog.sh")
@@ -277,11 +262,6 @@ def main():
     signal.signal(signal.SIGTERM, signal_handler)
     signal.signal(signal.SIGINT, signal_handler)
 
-    # Check prerequisites
-    if not check_ssl_files():
-        logger.error("SSL files not found, exiting")
-        sys.exit(1)
-
     if not check_blog_script():
         logger.error("Blog script not found or not executable, exiting")
         sys.exit(1)
@@ -295,8 +275,6 @@ def main():
 
     logger.info("Starting GitHub Webhook Server")
     logger.info(f"Listening on {HOST}:{PORT}")
-    logger.info(f"SSL Certificate: {SSL_CERT_PATH}")
-    logger.info(f"SSL Private Key: {SSL_KEY_PATH}")
     logger.info(f"Blog Directory: {BLOG_DIR}")
 
     # Write PID file
