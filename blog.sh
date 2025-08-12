@@ -79,7 +79,7 @@ stop_blog() {
     print_status "Stopping the blog..."
     cd "$SCRIPT_DIR"
     docker compose down
-    docker image rm -f blog_nginx
+    docker image rm -f blog-nginx
     print_success "Blog stopped"
 }
 
