@@ -44,6 +44,10 @@ fi
 # Function to start the blog
 start_blog() {
     print_status "Starting the blog..."
+    
+    # Ensure SSL certificates are present
+    copy_ssl_certificates
+    
     cd "$SCRIPT_DIR"
     docker compose up -d
     
@@ -51,8 +55,8 @@ start_blog() {
     sleep 3
     
     # Check if the blog is running
-    if curl -s -o /dev/null -w "%{http_code}" http://localhost | grep -q "200"; then
-        print_success "Blog is running successfully at http://localhost"
+    if curl -s -o /dev/null -w "%{http_code}" http://localhost | grep -q "301"; then
+        print_success "Blog is running successfully at https://localhost (HTTP redirects to HTTPS)"
     else
         print_warning "Blog started but may not be fully ready yet. Check logs with: $0 logs"
     fi
@@ -118,6 +122,42 @@ show_status() {
         fi
     else
         print_error "Blog container is not running"
+    fi
+}
+
+# Function to copy SSL certificates from parent directory
+copy_ssl_certificates() {
+    local parent_dir cert_file key_file
+    parent_dir="$(dirname "$SCRIPT_DIR")"
+    cert_file="$parent_dir/certificate.crt"
+    key_file="$parent_dir/private.key"
+    
+    print_status "Checking for SSL certificates in parent directory..."
+    
+    # Create ssl directory if it doesn't exist
+    mkdir -p "$SCRIPT_DIR/ssl"
+    
+    # Copy certificate if it exists in parent directory
+    if [ -f "$cert_file" ]; then
+        print_status "Copying certificate.crt from parent directory..."
+        cp "$cert_file" "$SCRIPT_DIR/ssl/certificate.crt"
+        print_success "Certificate copied successfully"
+    else
+        if [ ! -f "$SCRIPT_DIR/ssl/certificate.crt" ]; then
+            print_warning "certificate.crt not found in parent directory ($parent_dir) and not present in ssl folder"
+        fi
+    fi
+    
+    # Copy private key if it exists in parent directory
+    if [ -f "$key_file" ]; then
+        print_status "Copying private.key from parent directory..."
+        cp "$key_file" "$SCRIPT_DIR/ssl/private.key"
+        chmod 600 "$SCRIPT_DIR/ssl/private.key"  # Secure permissions for private key
+        print_success "Private key copied successfully"
+    else
+        if [ ! -f "$SCRIPT_DIR/ssl/private.key" ]; then
+            print_warning "private.key not found in parent directory ($parent_dir) and not present in ssl folder"
+        fi
     fi
 }
 
@@ -208,6 +248,9 @@ update_from_repo() {
     cp -a "$blog_src"/. "$orig_dir"/
     popd >/dev/null
     rm -rf "$tmpdir"
+
+    # Copy SSL certificates from parent directory after update
+    copy_ssl_certificates
 
     print_success "Update complete. Directory replaced with contents from the cloned 'blog' directory."
     print_status "Starting Blog Again..."
