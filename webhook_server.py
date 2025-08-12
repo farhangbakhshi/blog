@@ -288,9 +288,7 @@ def main():
             app,
             host=HOST,
             port=PORT,
-            url_scheme='https',
-            ssl_cert=SSL_CERT_PATH,
-            ssl_key=SSL_KEY_PATH,
+            url_scheme='http',
             threads=4,
             connection_limit=100
         )
