@@ -83,7 +83,7 @@ show_logs() {
 # Function to test nginx configuration
 test_config() {
     print_status "Testing nginx configuration..."
-    if docker run --rm -v "$SCRIPT_DIR/nginx:/etc/nginx:ro" nginx:alpine nginx -t; then
+    if docker run --rm -v "$SCRIPT_DIR/nginx:/etc/nginx:ro" nginx:latest nginx -t; then
         print_success "Nginx configuration is valid"
     else
         print_error "Nginx configuration has errors"
