@@ -55,8 +55,8 @@ start_blog() {
     sleep 3
     
     # Check if the blog is running
-    if curl -s -o /dev/null -w "%{https_code}" https://localhost | grep -q "301"; then
-        print_success "Blog is running successfully at https://localhost (HTTP redirects to HTTPS)"
+    if curl -k -s -o /dev/null -w "%{http_code}" https://localhost | grep -q "200"; then
+        print_success "Blog is running successfully at https://localhost (HTTPS is up)"
     else
         print_warning "Blog started but may not be fully ready yet. Check logs with: $0 logs"
     fi
