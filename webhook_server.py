@@ -37,7 +37,7 @@ SSL_CERT_PATH = "/root/certificate.crt"
 SSL_KEY_PATH = "/root/private.key"
 BLOG_DIR = "/root/blog"
 PORT = 5000
-HOST = "0.0.0.0"
+HOST = "127.0.0.1"
 
 # GitHub IP ranges (updated as of 2024)
 GITHUB_IP_RANGES = [
