@@ -9,10 +9,6 @@ RUN rm -f /etc/nginx/nginx.conf /etc/nginx/conf.d/default.conf
 # Create necessary directories
 RUN mkdir -p /var/www/blog /var/log/nginx
 
-# Copy SSL certificates
-COPY /root/certificate.crt /ssl/certificate.crt
-COPY /root/private.key /ssl/private.key
-
 # Copy nginx configuration files
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY nginx/blog.conf /etc/nginx/conf.d/blog.conf
