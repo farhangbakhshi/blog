@@ -190,6 +190,7 @@ def github_webhook():
 @app.route("/health", methods=["GET"])
 def health_check():
     """Health check endpoint."""
+    logger.info("Health Checked.")
     return (
         jsonify({"status": "healthy", "service": "webhook-server", "version": "1.0.0"}),
         200,
