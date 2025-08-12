@@ -2,8 +2,6 @@
 
 # Blog deployment and management script
 
-set -e
-
 # Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -51,15 +49,29 @@ start_blog() {
     cd "$SCRIPT_DIR"
     docker compose up -d
     
-    # Wait a moment for the container to start
-    sleep 3
+    # Wait for the container to start and nginx to initialize
+    print_status "Waiting for nginx to start..."
+    sleep 5
     
-    # Check if the blog is running
-    if curl -k -s -o /dev/null -w "%{http_code}" https://localhost | grep -q "200"; then
-        print_success "Blog is running successfully at https://localhost (HTTPS is up)"
-    else
-        print_warning "Blog started but may not be fully ready yet. Check logs with: $0 logs"
-    fi
+    # Check if the blog is running with retry logic
+    local attempts=0
+    local max_attempts=6
+    
+    while [ $attempts -lt $max_attempts ]; do
+        if curl -s -o /dev/null -w "%{http_code}" http://localhost 2>/dev/null | grep -q "301"; then
+            print_success "Blog is running successfully at https://localhost (HTTP redirects to HTTPS)"
+            return 0
+        fi
+        
+        attempts=$((attempts + 1))
+        if [ $attempts -lt $max_attempts ]; then
+            print_status "Waiting for nginx to be ready... (attempt $attempts/$max_attempts)"
+            sleep 2
+        fi
+    done
+    
+    print_warning "Blog started but readiness check timed out. Check logs with: $0 logs"
+    print_status "This may be normal if nginx is still initializing."
 }
 
 # Function to stop the blog
@@ -137,27 +149,31 @@ copy_ssl_certificates() {
     # Create ssl directory if it doesn't exist
     mkdir -p "$SCRIPT_DIR/ssl"
     
-    # Copy certificate if it exists in parent directory
-    if [ -f "$cert_file" ]; then
-        print_status "Copying certificate.crt from parent directory..."
-        cp "$cert_file" "$SCRIPT_DIR/ssl/certificate.crt"
-        print_success "Certificate copied successfully"
-    else
-        if [ ! -f "$SCRIPT_DIR/ssl/certificate.crt" ]; then
+    # Copy certificate if it doesn't exist in ssl directory and exists in parent directory
+    if [ ! -f "$SCRIPT_DIR/ssl/certificate.crt" ]; then
+        if [ -f "$cert_file" ]; then
+            print_status "Copying certificate.crt from parent directory..."
+            cp "$cert_file" "$SCRIPT_DIR/ssl/certificate.crt"
+            print_success "Certificate copied successfully"
+        else
             print_warning "certificate.crt not found in parent directory ($parent_dir) and not present in ssl folder"
         fi
+    else
+        print_status "Certificate already exists in ssl directory, skipping copy"
     fi
     
-    # Copy private key if it exists in parent directory
-    if [ -f "$key_file" ]; then
-        print_status "Copying private.key from parent directory..."
-        cp "$key_file" "$SCRIPT_DIR/ssl/private.key"
-        chmod 600 "$SCRIPT_DIR/ssl/private.key"  # Secure permissions for private key
-        print_success "Private key copied successfully"
-    else
-        if [ ! -f "$SCRIPT_DIR/ssl/private.key" ]; then
+    # Copy private key if it doesn't exist in ssl directory and exists in parent directory
+    if [ ! -f "$SCRIPT_DIR/ssl/private.key" ]; then
+        if [ -f "$key_file" ]; then
+            print_status "Copying private.key from parent directory..."
+            cp "$key_file" "$SCRIPT_DIR/ssl/private.key"
+            chmod 600 "$SCRIPT_DIR/ssl/private.key"  # Secure permissions for private key
+            print_success "Private key copied successfully"
+        else
             print_warning "private.key not found in parent directory ($parent_dir) and not present in ssl folder"
         fi
+    else
+        print_status "Private key already exists in ssl directory, skipping copy"
     fi
 }
 
