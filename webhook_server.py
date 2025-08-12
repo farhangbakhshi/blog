@@ -131,7 +131,7 @@ def run_blog_update():
         return False, str(e)
 
 
-@app.route("/webhook", methods=["POST"])
+@app.route("/", methods=["POST"])
 def github_webhook():
     """Handle GitHub webhook requests."""
     try:
