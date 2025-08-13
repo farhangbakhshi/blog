@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 
 <head>
     <meta charset="UTF-8">
@@ -9,10 +9,15 @@
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
+            darkMode: 'media',
             theme: {
                 extend: {
                     fontFamily: {
                         'ibm': ['IBM Plex Serif', 'serif']
+                    },
+                    colors: {
+                        'cream': '#F8F5F1',
+                        'brand-black': '#1A1A1A',
                     }
                 }
             }
@@ -20,153 +25,157 @@
     </script>
 </head>
 
-<body class="font-ibm leading-relaxed text-black dark:text-white bg-neutral-200 dark:bg-neutral-800 max-w-[700px] mx-auto py-10 px-6 md:px-6">
-    <nav class="mb-16 border-b border-neutral-800 dark:border-neutral-200 pb-6">
-        <a href="/" class="text-neutral-800 dark:text-neutral-200 no-underline font-bold hover:underline text-3xl">Farhang's Blog</a>
-    </nav>
+<body
+    class="font-ibm leading-relaxed text-brand-black dark:text-cream bg-cream dark:bg-brand-black max-w-[700px] mx-auto py-10 px-6 md:px-6">
+    <header class="flex justify-center items-center mb-16 pb-6 border-b border-brand-black dark:border-cream">
+        <a href="/"
+            class="text-brand-black dark:text-cream no-underline font-bold hover:underline text-xl tracking-widest">FARHANG'S BLOG</a>
+    </header>
 
     <main>
-        <article class="mb-12 pb-10 border-b border-gray-300 dark:border-gray-600 last:border-b-0">
-            <h1 class="text-4xl mb-12 font-medium">Linux: A Comprehensive Introduction</h1>
-            <time class="text-base text-neutral-800 dark:text-neutral-200 block mb-6">August 11, 2025</time>
+        <article class="mb-12">
+            <h1 class="text-4xl mb-6 font-medium">Linux: A Comprehensive Introduction</h1>
+            <time class="text-sm text-brand-black dark:text-cream block mb-12">August 11, 2025</time>
 
-            <p class="mb-6 text-lg">Have you heard of Linux and need to know what it is? You're reading the right article!</p>
-            <p class="mb-6 text-lg">Whether you have programmer friends or you're new to programming, you are bound to hear
-                about Linux at some point. No matter the reason, if you have heard the name "Linux" or "GNU/Linux" and
-                wondered what it is, you've landed on the right post! I am Farhang, and this is a comprehensive
-                introduction to Linux for those who have yet to learn about it.</p>
-            <p class="mb-6 text-lg">Linux is an operating system, so you must first know what an OS is so you can get to know
-                Linux better. So, in this article, we will first discuss what an OS (Operating System) is and what
-                different types of OS are out there. Next, we will discuss Linux (or GNU/Linux) as the umbrella term
-                that refers to many operating systems and mention some of the most famous instances of Linux operating
-                systems.</p>
+            <div class="text-lg space-y-6">
+                <p>Have you heard of Linux and need to know what it is? You're reading the right article!</p>
+                <p>Whether you have programmer friends or you're new to programming, you are bound to hear
+                    about Linux at some point. No matter the reason, if you have heard the name "Linux" or "GNU/Linux" and
+                    wondered what it is, you've landed on the right post! I am Farhang, and this is a comprehensive
+                    introduction to Linux for those who have yet to learn about it.</p>
+                <p>Linux is an operating system, so you must first know what an OS is so you can get to know
+                    Linux better. So, in this article, we will first discuss what an OS (Operating System) is and what
+                    different types of OS are out there. Next, we will discuss Linux (or GNU/Linux) as the umbrella term
+                    that refers to many operating systems and mention some of the most famous instances of Linux operating
+                    systems.</p>
 
-            <h2 class="text-3xl mb-6 font-medium">What is an OS?</h2>
-            <p class="mb-6 text-lg">For your computer to run, you need to interact with the computer's hardware. Why do you need
-                to interact with hardware? Because that's where all the computing happens. However, your computer does
-                things only based on a <strong>zero-or-one logic</strong>–as it is known to do. This logic is reliable
-                since the hardware can attribute zero to the absence of electrical pulses and one to their presence.
-                Now, how do we interact with a machine that only understands zeros and ones? Using <strong>computer
-                    codes</strong>. Computer codes let you interact with the hardware by <strong>translating your
-                    inputs</strong> (whether it be keyboard inputs, clicks, or voice inputs) into zeros and ones. The
-                process of this translation is very complex and requires a separate blog post to explain.</p>
-            <p class="mb-6 text-lg">However, that gets us to the definition of operating systems: <strong>An operating system is
-                    a large set of packaged computer codes that let you interact with your computer's hardware
-                    efficiently and effectively.</strong> Each package handles a particular set of tasks. Your computer
-                breaks down each of your requirements into smaller tasks and delegates them, each to be handled by a
-                particular package.</p>
-            <p class="mb-6 text-lg">Now, why are there different operating systems? Good question.</p>
-            <p class="mb-6 text-lg">Different requirements that you expect your computer to satisfy–like running a video game or
-                streaming a video–are very <strong>complex tasks</strong>. Each task that you give your computer is like
-                telling it to build a skyscraper. If someone tells you and me to go build two skyscrapers, of course, we
-                might–and probably will–break down the project into smaller steps in our own different ways. In the same
-                way, there are many ways of translating your requirements into zeros and ones on a computer. Hence,
-                <strong>there are different operating systems, each of which has packaged their computer codes in
-                    different ways.</strong></p>
+                <h2 class="text-3xl pt-6 mb-6 font-medium">What is an OS?</h2>
+                <p>For your computer to run, you need to interact with the computer's hardware. Why do you need
+                    to interact with hardware? Because that's where all the computing happens. However, your computer does
+                    things only based on a <strong>zero-or-one logic</strong>–as it is known to do. This logic is reliable
+                    since the hardware can attribute zero to the absence of electrical pulses and one to their presence.
+                    Now, how do we interact with a machine that only understands zeros and ones? Using <strong>computer
+                        codes</strong>. Computer codes let you interact with the hardware by <strong>translating your
+                        inputs</strong> (whether it be keyboard inputs, clicks, or voice inputs) into zeros and ones. The
+                    process of this translation is very complex and requires a separate blog post to explain.</p>
+                <p>However, that gets us to the definition of operating systems: <strong>An operating system is
+                        a large set of packaged computer codes that let you interact with your computer's hardware
+                        efficiently and effectively.</strong> Each package handles a particular set of tasks. Your computer
+                    breaks down each of your requirements into smaller tasks and delegates them, each to be handled by a
+                    particular package.</p>
+                <p>Now, why are there different operating systems? Good question.</p>
+                <p>Different requirements that you expect your computer to satisfy–like running a video game or
+                    streaming a video–are very <strong>complex tasks</strong>. Each task that you give your computer is like
+                    telling it to build a skyscraper. If someone tells you and me to go build two skyscrapers, of course, we
+                    might–and probably will–break down the project into smaller steps in our own different ways. In the same
+                    way, there are many ways of translating your requirements into zeros and ones on a computer. Hence,
+                    <strong>there are different operating systems, each of which has packaged their computer codes in
+                        different ways.</strong></p>
 
-            <h2 class="text-3xl mb-6 font-medium">Use Cases of Operating Systems</h2>
-            <p class="mb-6 text-lg">Operating systems are not only helping you interact with your computer. Phones and laptops,
-                though the most known devices to use an operating system, are not the only devices using one. The
-                webpage you're on right now has come to you through a series of devices that work in a network to make
-                viewing the page possible. All of those devices, including the main server, use an OS.</p>
-            <p class="mb-6 text-lg">Now, do all electronic devices have an OS? In general, every electronic device with
-                reprogrammable functionality uses an OS. However, there are certain devices that have a fixed
-                functionality and are not reprogrammable. Since <strong>programming is the process of producing software
-                    that defines the functionality of hardware</strong>, reprogramming a computer is manipulating or
-                completely changing the software so that you can get new functionality out of the same hardware. Thus,
-                your phone needs an OS since its fixed hardware is supposed to change functionality rapidly (from
-                sending messages to checking Instagram). However, an electronic toaster, for example, cannot and doesn't
-                need to be manipulated on a software level to be a calculator. Hence, your toaster doesn't have an OS.
-            </p>
+                <h2 class="text-3xl pt-6 mb-6 font-medium">Use Cases of Operating Systems</h2>
+                <p>Operating systems are not only helping you interact with your computer. Phones and laptops,
+                    though the most known devices to use an operating system, are not the only devices using one. The
+                    webpage you're on right now has come to you through a series of devices that work in a network to make
+                    viewing the page possible. All of those devices, including the main server, use an OS.</p>
+                <p>Now, do all electronic devices have an OS? In general, every electronic device with
+                    reprogrammable functionality uses an OS. However, there are certain devices that have a fixed
+                    functionality and are not reprogrammable. Since <strong>programming is the process of producing software
+                        that defines the functionality of hardware</strong>, reprogramming a computer is manipulating or
+                    completely changing the software so that you can get new functionality out of the same hardware. Thus,
+                    your phone needs an OS since its fixed hardware is supposed to change functionality rapidly (from
+                    sending messages to checking Instagram). However, an electronic toaster, for example, cannot and doesn't
+                    need to be manipulated on a software level to be a calculator. Hence, your toaster doesn't have an OS.
+                </p>
 
-            <h2 class="text-3xl mb-6 font-medium">What Are the Most Famous Operating Systems?</h2>
-            <p class="mb-6 text-lg">The most famous operating systems are <strong>Microsoft Windows, Linux, MacOS, Android, and
-                    iOS.</strong> As you can see, many of these operating systems even have the abbreviation "OS" in
-                their names.</p>
-            <p class="mb-6 text-lg">Where did these all come from? What are Linux "distributions"? Why are there so many? Good
-                questions.</p>
-            <p class="mb-6 text-lg">Let's dive into a short history of how operating systems were developed and why there are so
-                many:</p>
+                <h2 class="text-3xl pt-6 mb-6 font-medium">What Are the Most Famous Operating Systems?</h2>
+                <p>The most famous operating systems are <strong>Microsoft Windows, Linux, MacOS, Android, and
+                        iOS.</strong> As you can see, many of these operating systems even have the abbreviation "OS" in
+                    their names.</p>
+                <p>Where did these all come from? What are Linux "distributions"? Why are there so many? Good
+                    questions.</p>
+                <p>Let's dive into a short history of how operating systems were developed and why there are so
+                    many:</p>
 
-            <h2 class="text-3xl mb-6 font-medium">Where Did It All Begin?</h2>
-            <p class="mb-6 text-lg">It all began with trying to reprogram electronic devices to serve different goals at
-                different times. Then each group of early operating systems started following their own standards for
-                how they packaged their codes.</p>
-            <p class="mb-6 text-lg">Windows, in the early days, went its own way–and is still doing that. Linux and MacOS,
-                however, are <strong>inspired by the same standard of packaging codes</strong>. This same standard was
-                also used to develop Android and iOS operating systems for phones with touch interfaces during the
-                2000s. The standard, called UNIX, said that each little functionality of programs should be packaged and
-                reusable. This helped develop new software that provided new uses for a computer. The new software could
-                use these smaller functionalities <strong>by delegating some of the process of new
-                    functionalities</strong> to these packages–like hiring a contractor for a small part of a big
-                project.</p>
-            <p class="mb-6 text-lg">The UNIX standard was then revised by Richard Stallman to make the GNU standard, using which
-                a lot of software was developed later–mostly by the GNU Foundation.</p>
-            <p class="mb-6 text-lg">Later on, Linus Torvalds made <strong>a kernel</strong> that could effectively connect GNU
-                and other software to the hardware, and called it Linux. Since the kernel was called Linux and a lot of
-                the software was made by the GNU Foundation, the operating system that emerged was originally called
-                <strong>GNU/Linux</strong>. Over time, however, the word Linux has started being attributed to the whole
-                OS, and not only the kernel.</p>
-            <p class="mb-6 text-lg">The GNU Foundation demands that we call this operating system "GNU/Linux" because simply
-                calling it "Linux" would undermine the efforts of those who developed a major part of the OS. However,
-                in favor of choosing descriptive vocabulary over prescriptive language, I call it what almost everybody
-                calls it and get over this subject by acknowledging the work of the selfless people who have developed
-                GNU packages.</p>
+                <h2 class="text-3xl pt-6 mb-6 font-medium">Where Did It All Begin?</h2>
+                <p>It all began with trying to reprogram electronic devices to serve different goals at
+                    different times. Then each group of early operating systems started following their own standards for
+                    how they packaged their codes.</p>
+                <p>Windows, in the early days, went its own way–and is still doing that. Linux and MacOS,
+                    however, are <strong>inspired by the same standard of packaging codes</strong>. This same standard was
+                    also used to develop Android and iOS operating systems for phones with touch interfaces during the
+                    2000s. The standard, called UNIX, said that each little functionality of programs should be packaged and
+                    reusable. This helped develop new software that provided new uses for a computer. The new software could
+                    use these smaller functionalities <strong>by delegating some of the process of new
+                        functionalities</strong> to these packages–like hiring a contractor for a small part of a big
+                    project.</p>
+                <p>The UNIX standard was then revised by Richard Stallman to make the GNU standard, using which
+                    a lot of software was developed later–mostly by the GNU Foundation.</p>
+                <p>Later on, Linus Torvalds made <strong>a kernel</strong> that could effectively connect GNU
+                    and other software to the hardware, and called it Linux. Since the kernel was called Linux and a lot of
+                    the software was made by the GNU Foundation, the operating system that emerged was originally called
+                    <strong>GNU/Linux</strong>. Over time, however, the word Linux has started being attributed to the whole
+                    OS, and not only the kernel.</p>
+                <p>The GNU Foundation demands that we call this operating system "GNU/Linux" because simply
+                    calling it "Linux" would undermine the efforts of those who developed a major part of the OS. However,
+                    in favor of choosing descriptive vocabulary over prescriptive language, I call it what almost everybody
+                    calls it and get over this subject by acknowledging the work of the selfless people who have developed
+                    GNU packages.</p>
 
-            <h2 class="text-3xl mb-6 font-medium">What are Linux Distributions?</h2>
-            <p class="mb-6 text-lg">Linux, unlike Windows and MacOS, is an open-source operating system. Being open-source means
-                that the computer codes written for Linux are available to everybody. As a result of that, any
-                individual or community can take the code, modify it to serve a particular purpose, and re-publish it.
-                Remember, an operating system is a multi-purpose base that you can build upon and make it do whatever
-                you want it to. Since Linux is a minimal OS compared to Windows and MacOS, it is a good ground on which
-                you can build any skyscraper. Since the <strong>basic functionalities of computing and using the
-                    hardware resources</strong> are available to you, nothing is impossible on Linux. As long as you
-                know how to code it, there is a way to achieve any functionality that a computer has on Linux.</p>
-            <p class="mb-6 text-lg">So, it is understandable that hackers take the Linux source code and make their own
-                distribution of it. Of course, such a distribution would include computer codes built upon those of
-                GNU/Linux, aimed at paving the way for hackers' codes to run. There are all kinds of distributions for
-                Linux, each made for a certain purpose; from user-friendly distributions aimed at the public to
-                specialized ones for programmers.</p>
+                <h2 class="text-3xl pt-6 mb-6 font-medium">What are Linux Distributions?</h2>
+                <p>Linux, unlike Windows and MacOS, is an open-source operating system. Being open-source means
+                    that the computer codes written for Linux are available to everybody. As a result of that, any
+                    individual or community can take the code, modify it to serve a particular purpose, and re-publish it.
+                    Remember, an operating system is a multi-purpose base that you can build upon and make it do whatever
+                    you want it to. Since Linux is a minimal OS compared to Windows and MacOS, it is a good ground on which
+                    you can build any skyscraper. Since the <strong>basic functionalities of computing and using the
+                        hardware resources</strong> are available to you, nothing is impossible on Linux. As long as you
+                    know how to code it, there is a way to achieve any functionality that a computer has on Linux.</p>
+                <p>So, it is understandable that hackers take the Linux source code and make their own
+                    distribution of it. Of course, such a distribution would include computer codes built upon those of
+                    GNU/Linux, aimed at paving the way for hackers' codes to run. There are all kinds of distributions for
+                    Linux, each made for a certain purpose; from user-friendly distributions aimed at the public to
+                    specialized ones for programmers.</p>
 
-            <h2 class="text-3xl mb-6 font-medium">What Are Some Linux Distributions?</h2>
-            <p class="mb-6 text-lg">Linux distributions are <a href="https://en.wikipedia.org/wiki/List_of_Linux_distributions"
-                    class="text-neutral-800 dark:text-neutral-200 hover:underline">very versatile</a>. One result of this versatility is that you
-                can choose whatever you want based on your needs, and another is that you get lost among the distros.
-                Here, we discuss two of the <strong>most famous and user-friendly Linux distributions</strong>. Taking a
-                look at each one's website can help you get more familiar with Linux and better understand what they are
-                made to do.</p>
-            <p class="mb-6 text-lg">Before we dive into it, I should mention that each of these have different versions
-                available, and the information I provide about each is mainly based on the experience I've had with
-                their desktop/workstation versions.</p>
+                <h2 class="text-3xl pt-6 mb-6 font-medium">What Are Some Linux Distributions?</h2>
+                <p>Linux distributions are <a href="https://en.wikipedia.org/wiki/List_of_Linux_distributions"
+                        class="text-brand-black dark:text-cream hover:underline">very versatile</a>. One result of this versatility is that you
+                    can choose whatever you want based on your needs, and another is that you get lost among the distros.
+                    Here, we discuss two of the <strong>most famous and user-friendly Linux distributions</strong>. Taking a
+                    look at each one's website can help you get more familiar with Linux and better understand what they are
+                    made to do.</p>
+                <p>Before we dive into it, I should mention that each of these have different versions
+                    available, and the information I provide about each is mainly based on the experience I've had with
+                    their desktop/workstation versions.</p>
 
-            <h3 class="text-2xl mb-5 font-medium">Ubuntu</h3>
-            <p class="mb-6 text-lg">Ubuntu is the most user-friendly distribution of all. Ubuntu uses a desktop manager system
-                called GNOME, but offers a modified version of it. This modified version of GNOME is not much different
-                from the original one. Ubuntu is offered by Canonical, and one LTS (Long-Term Support) version of it is
-                <strong>released every two years</strong>. Other versions of Ubuntu, released twice a year, are only
-                supported until the next version is released.</p>
-            <p class="mb-6 text-lg">There are also some variants of Ubuntu that use other desktop manager packages like
-                <strong>Kubuntu</strong> (using KDE) and <strong>Xubuntu</strong> (using Xfce). The current LTS version
-                of Ubuntu is the 24.04.1 version, and this article is being written using it.</p>
-            <p class="mb-6 text-lg">Ubuntu is derived from one of the most important distributions of Linux called Debian.
-                Debian is the source for many user-friendly Linux distributions that make it possible for beginners and
-                those who aren't technically skilled to use Linux.</p>
+                <h3 class="text-2xl pt-4 mb-5 font-medium">Ubuntu</h3>
+                <p>Ubuntu is the most user-friendly distribution of all. Ubuntu uses a desktop manager system
+                    called GNOME, but offers a modified version of it. This modified version of GNOME is not much different
+                    from the original one. Ubuntu is offered by Canonical, and one LTS (Long-Term Support) version of it is
+                    <strong>released every two years</strong>. Other versions of Ubuntu, released twice a year, are only
+                    supported until the next version is released.</p>
+                <p>There are also some variants of Ubuntu that use other desktop manager packages like
+                    <strong>Kubuntu</strong> (using KDE) and <strong>Xubuntu</strong> (using Xfce). The current LTS version
+                    of Ubuntu is the 24.04.1 version, and this article is being written using it.</p>
+                <p>Ubuntu is derived from one of the most important distributions of Linux called Debian.
+                    Debian is the source for many user-friendly Linux distributions that make it possible for beginners and
+                    those who aren't technically skilled to use Linux.</p>
 
-            <h3 class="text-2xl mb-5 font-medium">Fedora</h3>
-            <p class="mb-6 text-lg">Fedora is another one of the user-friendly distributions of Linux. Derived from
-                <strong>RedHat Linux</strong>, Fedora offers a good combination of different packages that are always
-                up-to-date. The <strong>latest version of GNOME</strong>, for example, is always available for use in
-                Fedora Linux.</p>
-            <p class="mb-6 text-lg">Fedora, like Ubuntu, comes in many "flavors" that use different desktop managers.</p>
+                <h3 class="text-2xl pt-4 mb-5 font-medium">Fedora</h3>
+                <p>Fedora is another one of the user-friendly distributions of Linux. Derived from
+                    <strong>RedHat Linux</strong>, Fedora offers a good combination of different packages that are always
+                    up-to-date. The <strong>latest version of GNOME</strong>, for example, is always available for use in
+                    Fedora Linux.</p>
+                <p>Fedora, like Ubuntu, comes in many "flavors" that use different desktop managers.</p>
 
-            <h2 class="text-3xl mb-6 font-medium">Conclusion</h2>
-            <p class="mb-6 text-lg">In this article, we briefly discussed the different aspects of the Linux operating system.
-                First, a definition of what an OS is, and then a discussion of what type of an operating system Linux
-                is.</p>
-            <p class="mb-6 text-lg">This was the first blog post I wrote for my blog. However, if you want to read more about
-                programming and Linux, <strong>check out my blog!</strong> I will post every day.</p>
+                <h2 class="text-3xl pt-6 mb-6 font-medium">Conclusion</h2>
+                <p>In this article, we briefly discussed the different aspects of the Linux operating system.
+                    First, a definition of what an OS is, and then a discussion of what type of an operating system Linux
+                    is.</p>
+                <p>This was the first blog post I wrote for my blog. However, if you want to read more about
+                    programming and Linux, <strong>check out my blog!</strong> I will post every day.</p>
+            </div>
 
-            <a href="/" class="text-neutral-800 dark:text-neutral-200 hover:underline text-lg">← Back</a>
+            <a href="/" class="text-brand-black dark:text-cream hover:underline text-lg mt-12 inline-block">← Back</a>
         </article>
     </main>
 </body>

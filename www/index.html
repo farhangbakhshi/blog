@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 
 <head>
     <meta charset="UTF-8">
@@ -9,10 +9,15 @@
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
+            darkMode: 'media',
             theme: {
                 extend: {
                     fontFamily: {
                         'ibm': ['IBM Plex Serif', 'serif']
+                    },
+                    colors: {
+                        'cream': '#F8F5F1',
+                        'brand-black': '#1A1A1A',
                     }
                 }
             }
@@ -21,25 +26,39 @@
 </head>
 
 <body
-    class="font-ibm leading-relaxed text-black dark:text-white bg-neutral-200 dark:bg-neutral-800 max-w-[700px] mx-auto py-10 px-6 md:px-6">
-    <nav class="mb-16 border-b border-neutral-800 dark:border-neutral-200 pb-6">
+    class="font-ibm leading-relaxed text-brand-black dark:text-cream bg-cream dark:bg-brand-black max-w-[700px] mx-auto py-10 px-6 md:px-6">
+    <header class="flex justify-center items-center mb-16 pb-6 border-b border-brand-black dark:border-cream">
         <a href="/"
-            class="text-neutral-800 dark:text-neutral-200 no-underline font-bold hover:underline text-3xl">Farhang's
-            Blog</a>
-    </nav>
+            class="text-brand-black dark:text-cream no-underline font-bold hover:underline text-3xl tracking-widest">FARHANG'S BLOG</a>
+    </header>
 
     <main>
-        <h1 class="text-4xl mb-12 font-medium">Posts</h1>
-
+        <h1 class="text-2xl font-medium mb-12 text-center tracking-wide">POSTS</h1>
         <div class="grid grid-cols-1 gap-12">
-            <div class="pb-10 border-b border-neutral-300 dark:border-neutral-600 last:border-b-0">
-                <h2 class="text-2xl mb-6 font-medium">
+            <div class="relative">
+                <div class="flex items-center mb-6">
+                    <span class="text-sm mr-4">2</span>
+                    <div class="flex-grow border-t border-brand-black dark:border-cream"></div>
+                </div>
+                <h2 class="text-3xl mb-4 font-medium">
+                    <a href="/posts/best-python-online-interpreters"
+                        class="text-brand-black dark:text-cream no-underline hover:underline">Code on the Go: Best Free Online Python Interpreters of 2024</a>
+                </h2>
+                <p class="mb-6 text-lg">Discover the best free online Python interpreters for coding without installation.</p>
+                <time class="text-sm text-brand-black dark:text-cream block">August 13, 2025</time>
+            </div>
+            <div class="relative">
+                <div class="flex items-center mb-6">
+                    <span class="text-sm mr-4">1</span>
+                    <div class="flex-grow border-t border-brand-black dark:border-cream"></div>
+                </div>
+                <h2 class="text-3xl mb-4 font-medium">
                     <a href="/posts/linux-a-comprehensive-introduction"
-                        class="text-neutral-800 dark:text-neutral-200 no-underline hover:underline">Linux: A
+                        class="text-brand-black dark:text-cream no-underline hover:underline">Linux: A
                         Comprehensive Introduction</a>
                 </h2>
-                <time class="text-base text-neutral-800 dark:text-neutral-200 block mb-4">August 11, 2025</time>
                 <p class="mb-6 text-lg">Discover the power and flexibility of Linux operating systems.</p>
+                <time class="text-sm text-brand-black dark:text-cream block">August 11, 2025</time>
             </div>
             <!-- Add more <div> elements here for additional posts -->
         </div>
