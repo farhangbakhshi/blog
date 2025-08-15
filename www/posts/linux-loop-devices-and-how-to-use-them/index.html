@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Loop Devices and How to Use Them - Farhang's Blog</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'media',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'ibm': ['IBM Plex Serif', 'serif'],
+                        'mono': ['ui-monospace', 'SFMono-Regular', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace']
+                    },
+                    colors: {
+                        'cream': '#F8F5F1',
+                        'brand-black': '#1A1A1A',
+                        'code-bg-light': '#f6f8fa',
+                        'code-bg-dark': '#0d1117',
+                        'code-border-light': '#d0d7de',
+                        'code-border-dark': '#30363d'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .code-block {
+            background-color: #f6f8fa;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            padding: 16px;
+            margin: 16px 0;
+            overflow-x: auto;
+        }
+        
+        .dark .code-block {
+            background-color: #0d1117;
+            border-color: #30363d;
+        }
+        
+        .code-block code {
+            font-family: ui-monospace, SFMono-Regular, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.45;
+            color: #24292f;
+            background: transparent;
+            border: none;
+            padding: 0;
+        }
+        
+        .dark .code-block code {
+            color: #f0f6fc;
+        }
+        
+        .bash-keyword {
+            color: #cf222e;
+            font-weight: 600;
+        }
+        
+        .dark .bash-keyword {
+            color: #ff7b72;
+        }
+        
+        .bash-path {
+            color: #0969da;
+        }
+        
+        .dark .bash-path {
+            color: #79c0ff;
+        }
+        
+        /* Inline code styling - separate from code blocks */
+        p code, h1 code, h2 code, h3 code, li code {
+            background-color: #e8e8e8;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: ui-monospace, SFMono-Regular, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+            font-size: 85%;
+            color: #0f0f0f;
+            font-weight: 500;
+        }
+        
+        .dark p code, .dark h1 code, .dark h2 code, .dark h3 code, .dark li code {
+            background-color: #2d2d2d;
+            color: #e0e0e0;
+        }
+    </style>
+</head>
+
+<body
+    class="font-ibm leading-relaxed text-brand-black dark:text-cream bg-cream dark:bg-brand-black max-w-[700px] mx-auto py-10 px-6 md:px-6">
+    <nav class="fixed top-0 left-0 right-0 flex justify-center mx-auto bg-brand-black dark:bg-cream items-center p-4">
+        <a href="/"
+            class="text-cream dark:text-brand-black no-underline font-bold text-3xl tracking-widest">FARHANG'S
+            BLOG</a>
+    </nav>
+
+    <main>
+        <article class="mt-12 mb-12">
+            <h1 class="text-4xl mb-6 font-medium">Linux Loop Devices and How to Use Them</h1>
+            <time class="text-sm text-brand-black dark:text-cream block mb-12">August 15, 2025</time>
+
+            <div class="text-lg space-y-6">
+                <p>If you're a Linux user, you might have stumbled upon the <code>/dev</code> directory that exists in the root directory of your Linux filesystem. There are many devices in the root directory that we will talk about in different blog posts. However, this blog post is dedicated to the loop devices. Whether you have heard about loop devices or stumbled upon them, this article is your guide to understanding what they do and how to use them.</p>
+
+                <h2 class="text-3xl pt-6 mb-6 font-medium">What Are Linux Loops?</h2>
+                <p>Linux loops are a series of devices that let you treat a file as if it were a block device. Whenever you mount and treat a file (most commonly a <code>.iso</code> file) like a physical disk or partition, one of the Linux loop devices is in use. Remember that Linux devices are not necessarily a part of your computer's hardware. Instead, there are some devices representing your hardware and some others representing device-like features of the Linux kernel. Moreover, we will talk about how and why everything is a file in Linux in a later post.</p>
+
+                <h2 class="text-3xl pt-6 mb-6 font-medium">Where Are the Loop Devices?</h2>
+                <p>In short, they are in the <code>/dev</code> directory. However, if you want to go and see them for yourself, you can use one of two methods:</p>
+
+                <h3 class="text-2xl pt-4 mb-5 font-medium">Using the Graphical User Interface</h3>
+                <p>You can open a new file browser window in your Linux and navigate to the root directory. There, you will see a directory named <code>dev</code>. Inside the <code>dev</code> directory are many files, each of which represents a device that your OS uses to perform different tasks. If you scroll down, you will see a list of loop devices named <code>loop0</code>, <code>loop1</code>, etc.</p>
+
+                <h3 class="text-2xl pt-4 mb-5 font-medium">Using the Terminal</h3>
+                <p>If you use a terminal command like <code>ls</code> to look inside the <code>/dev</code> directory, you will see that there are many files there, each of which represent a device that your OS uses to perform different tasks. In the <code>/dev</code> directory, you will see a number of loop devices. Mine are 34 and are named <code>loop0</code> to <code>loop33</code>.</p>
+
+                <h2 class="text-3xl pt-6 mb-6 font-medium">How Can I Use a Loop Device to Mount a File?</h2>
+                <p>There is a special terminal command in Linux that helps create and set up loop devices. Using the <code>losetup</code> command, you can view all of the loop devices and what they are attached to, create new loop devices, and set them up to represent the file that you want.</p>
+
+                <h3 class="text-2xl pt-4 mb-5 font-medium">Attaching and Mounting the Loop Device</h3>
+                <p>To get started, you can take a look at all of the loop devices that are currently attached to a file by typing the following command into your command line (<code>-a</code> shows all attachments):</p>
+                <div class="code-block">
+                    <code><span class="bash-keyword">sudo</span> losetup -a</code>
+                </div>
+                <p>Next, you can mount the loop device into your <code>/mnt</code> folder using the following command:</p>
+                <div class="code-block">
+                    <code><span class="bash-keyword">sudo</span> mount <span class="bash-path">/dev/loop0</span> <span class="bash-path">/mnt</span></code>
+                </div>
+
+                <h3 class="text-2xl pt-4 mb-5 font-medium">Unmounting and Detaching the Loop Device</h3>
+                <p>When you are done with your mounted file, you can then unmount it and detach the file from the Linux loop device. Here's how you can unmount the device:</p>
+                <div class="code-block">
+                    <code><span class="bash-keyword">sudo</span> umount <span class="bash-path">/mnt</span></code>
+                </div>
+                <p>Next, detaching the loop device from the file using a <code>-d</code> option:</p>
+                <div class="code-block">
+                    <code><span class="bash-keyword">sudo</span> losetup -d <span class="bash-path">/dev/loop0</span></code>
+                </div>
+
+                <h2 class="text-3xl pt-6 mb-6 font-medium">Conclusion</h2>
+                <p>In this article, we talked about what Linux loop devices are, where they are, and how you can use them. I hope this has been helpful for the Linux enthusiasts out there.</p>
+                <p>If you haven't checked my blog yet, check out my other posts! I am Farhang, a Linux and programming enthusiast, and I post every day.</p>
+            </div>
+
+            <a href="/" class="text-brand-black dark:text-cream hover:underline text-lg mt-12 inline-block">← Back</a>
+        </article>
+    </main>
+</body>
+
+</html>
